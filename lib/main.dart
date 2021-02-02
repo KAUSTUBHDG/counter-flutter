@@ -35,58 +35,62 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  CounterBloc _bloc = CounterBloc();
+  //final CounterBloc _bloc = BlocProvider.of<CounterBloc>(context);
   @override
   Widget build(BuildContext context) {
     // ignore: close_sinks
-    final CounterBloc _bloc = BlocProvider.of<CounterBloc>(context);
+
     return SafeArea(
-      child: BlocBuilder<CounterBloc, CounterState>(builder: (context, state) {
-        return Scaffold(
-          appBar: AppBar(
-            title: Text(widget.title),
-          ),
-          body: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  'You have pushed the button this many times:',
+      child: BlocBuilder<CounterBloc, CounterState>(
+          cubit: _bloc,
+          builder: (context, state) {
+            return Scaffold(
+              appBar: AppBar(
+                title: Text(widget.title),
+              ),
+              body: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      'You have pushed the button this many times:',
+                    ),
+                    Text(
+                      '${state.count}',
+                      style: Theme.of(context).textTheme.headline4,
+                    ),
+                  ],
                 ),
-                Text(
-                  '${state.count}',
-                  style: Theme.of(context).textTheme.headline4,
-                ),
-              ],
-            ),
-          ),
-          floatingActionButton: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              FloatingActionButton(
-                onPressed: () {
-                  _bloc.add(DecrementEvent(state.count));
-                },
-                tooltip: 'Decrement',
-                child: Icon(Icons.remove),
               ),
-              FloatingActionButton(
-                onPressed: () {
-                  _bloc.add(ResetEvent(state.count));
-                },
-                tooltip: 'Reset',
-                child: Icon(Icons.loop),
+              floatingActionButton: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  FloatingActionButton(
+                    onPressed: () {
+                      _bloc.add(DecrementEvent(state.count));
+                    },
+                    tooltip: 'Decrement',
+                    child: Icon(Icons.remove),
+                  ),
+                  FloatingActionButton(
+                    onPressed: () {
+                      _bloc.add(ResetEvent(state.count));
+                    },
+                    tooltip: 'Reset',
+                    child: Icon(Icons.loop),
+                  ),
+                  FloatingActionButton(
+                    onPressed: () {
+                      _bloc.add(IncrementEvent(state.count));
+                    },
+                    tooltip: 'Increment',
+                    child: Icon(Icons.add),
+                  ),
+                ],
               ),
-              FloatingActionButton(
-                onPressed: () {
-                  _bloc.add(IncrementEvent(state.count));
-                },
-                tooltip: 'Increment',
-                child: Icon(Icons.add),
-              ),
-            ],
-          ),
-        );
-      }),
+            );
+          }),
     );
   }
 }

@@ -20,7 +20,6 @@ class CounterBloc extends Bloc<CounterEvent, CounterState> {
       print('$countxx');
       int counts = increment(countxx);
       print('$counts');
-      // int zzz = countxx + 1;
       yield CounterIncrement(count: /*countxx */ counts);
     }
     if (event is DecrementEvent) {
@@ -36,7 +35,7 @@ class CounterBloc extends Bloc<CounterEvent, CounterState> {
       print('$counts');
       yield CounterReset(count: counts /* = 0*/);
     }
-    yield CounterUpdate(countxx);
+    //  yield CounterUpdate(countxx);
   }
 
   increment(int counte) {
